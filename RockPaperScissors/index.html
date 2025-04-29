@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kámen nůžky papír</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  header {
+    text-align: center;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .game {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  h4 {
+    text-align: center;
+  }
+
+  .game-area {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+
+  }
+
+  body.light {
+    background-color: #fff;
+    color: #000;
+  }
+
+  body.light .game-area {
+    background-color: #f0f0f0;
+  }
+
+
+  body.dark {
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+
+  body.dark .game-area {
+    background-color: #333;
+  }
+
+
+  body.colorful {
+    background-color: #2a0055;
+    color: #00ffcc;
+  }
+
+  body.colorful .game-area {
+    background-color: #660099;
+  }
+
+
+  button {
+    height: 5em;
+    width: 7em;
+    background-color: #fff;
+    border-radius: 10em;
+    margin: 0.5em;
+    font-size: large;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
+</style>
+
+<body>
+  <header>
+    <h1>Kámen nůžky papír</h1>
+
+
+    <label for="themeSelector">Barevné schéma:</label>
+    <select id="themeSelector">
+      <option value="light">Světlé</option>
+      <option value="dark">Tmavé</option>
+      <option value="colorful">Barevné</option>
+    </select>
+  </header>
+  <div class="container mt-4 game-area">
+    <h4 id="status" class="text-center"></h4>
+    <h4 class="text-center">
+      Scóre: <span id="score_player">0</span>:<span id="score_pc">0</span>
+    </h4>
+    <div class="row">
+      <!-- Player's Buttons -->
+      <div class="col-md-5 d-flex flex-column align-items-center justify-content-center gap-2">
+        <button id="rock" class="btn btn-light">🪨</button>
+        <button id="paper" class="btn btn-light">🧻</button>
+        <button id="scissors" class="btn btn-light">✂️</button>
+      </div>
+    
+      <!-- Separator Column (Only on medium+ screens) -->
+      <div class="col-md-2 d-none d-md-flex align-items-center justify-content-center">
+        <div style="width: 3px; height: 150px; background-color: black;"></div>
+      </div>
+    
+      <!-- PC's Button -->
+      <div class="col-md-5 d-flex align-items-center justify-content-center">
+        <button id="pc" class="btn btn-secondary" style="width: 7em; height: 5em;"></button>
+      </div>
+    </div>
+    
+  </div>
+  <script>
+    function pcChoice(event) {
+      stat.innerHTML = "";
+      let choices = ["rock", "paper", "scissors"];
+      let randomChoice = choices[Math.floor(Math.random() * choices.length)];
+      let userChoice = event.target.id;
+
+      if (randomChoice === "rock") {
+        document.getElementById("pc").innerHTML = "🪨";
+      } else if (randomChoice === "paper") {
+        document.getElementById("pc").innerHTML = "🧻";
+      } else {
+        document.getElementById("pc").innerHTML = "✂️";
+      }
+
+      if (scorePc < 2 && scorePlayer < 2) {
+        if (userChoice === "rock" && randomChoice === "rock") {
+          //tie
+          stat.innerHTML = "Remíza!";
+        } else if (userChoice === "rock" && randomChoice === "paper") {
+          //pc win
+          stat.innerHTML = "Kolo vyhrál počítač!";
+          scorePc += 1;
+          pcScore.innerHTML = scorePc;
+        } else if (userChoice === "rock" && randomChoice === "scissors") {
+          //user win
+          stat.innerHTML = "Kolo vyhrál hráč!";
+          scorePlayer += 1;
+          userScore.innerHTML = scorePlayer;
+        } else if (userChoice === "paper" && randomChoice === "paper") {
+          //tie
+          stat.innerHTML = "Remíza!";
+        } else if (userChoice === "paper" && randomChoice === "rock") {
+          //user win
+          stat.innerHTML = "Kolo vyhrál hráč!";
+          scorePlayer += 1;
+          userScore.innerHTML = scorePlayer;
+        } else if (userChoice === "paper" && randomChoice === "scissors") {
+          //pc win
+          stat.innerHTML = "Kolo vyhrál počítač!";
+          scorePc += 1;
+          pcScore.innerHTML = scorePc;
+        } else if (userChoice === "scissors" && randomChoice === "scissors") {
+          //tie
+          stat.innerHTML = "Remíza!";
+        } else if (userChoice === "scissors" && randomChoice === "rock") {
+          //pc win
+          stat.innerHTML = "Kolo vyhrál počítač!";
+          scorePc += 1;
+          pcScore.innerHTML = scorePc;
+        } else if (userChoice === "scissors" && randomChoice === "paper") {
+          //user win
+          stat.innerHTML = "Kolo vyhrál hráč!";
+          scorePlayer += 1;
+          userScore.innerHTML = scorePlayer;
+        }
+      } else {
+        if (scorePlayer == 2) {
+          alert("Vyhrál hráč!");
+          scorePc = 0;
+          scorePlayer = 0;
+          userScore.innerHTML = scorePlayer;
+          pcScore.innerHTML = scorePc;
+        } else {
+          alert("Vyhrál počítač!");
+          scorePc = 0;
+          scorePlayer = 0;
+          userScore.innerHTML = scorePlayer;
+          pcScore.innerHTML = scorePc;
+        }
+      }
+    }
+
+    const rock = document.getElementById("rock");
+    const paper = document.getElementById("paper");
+    const scissors = document.getElementById("scissors");
+    const stat = document.getElementById("status");
+    let pcScore = document.getElementById("score_pc");
+    let userScore = document.getElementById("score_player");
+    let scorePc = 0;
+    let scorePlayer = 0;
+    const themeSelect = document.getElementById("themeSelector");
+
+
+
+    rock.addEventListener("click", pcChoice);
+    paper.addEventListener("click", pcChoice);
+    scissors.addEventListener("click", pcChoice);
+
+    function themeChange(theme) {
+      document.body.className = theme;
+      localStorage.setItem("theme", theme);
+    }
+
+    function setTheme() {
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      themeChange(savedTheme);
+      themeSelect.value = savedTheme;
+    }
+
+    themeSelect.addEventListener("change", () => {
+      themeChange(themeSelect.value);
+    });
+
+    setTheme();
+  </script>
+</body>
+
+</html>
