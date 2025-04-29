@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generátor vtipů</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .container {
+      height: calc(100vh - 3rem);
+    }
+    .data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60%;
+      padding: 0 5rem;
+      flex: 1;
+    }
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5rem;
+      height: 5rem;
+      font-size: 1.5rem;
+      background-color: rgb(255, 150, 31);
+    }
+    a {
+      color: black;
+      text-decoration: none;
+    }
+    a:hover {
+      transform: scale(1.2);
+      padding: 0.5rem;
+      background-color: rgb(255, 173, 51);
+      border-radius: 1.2rem;
+    }
+    h1 {
+      text-align: center;
+    }
+    .vtip_container,
+    .prislovi_container {
+      width: 45%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5rem;
+      margin: 5rem 0 0 0;
+    }
+
+    .vtip_container {
+      background-color: beige;
+    }
+    .prislovi_container {
+      background-color: lightblue;
+    }
+
+    .btn_container {
+      display: flex;
+      justify-content: center;
+    }
+    #load {
+      background-color: white;
+      border: 0.1px solid black;
+      border-radius: 24px;
+      width: 20rem;
+      height: 3rem;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+    #vtip {
+      text-align: left;
+      font-size: 2rem;
+    }
+
+    #prislovi {
+      text-align: right;
+      font-size: 2rem;
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 768px) {
+      .data {
+        flex-direction: column; /* Stack the vtip and prislovi vertically */
+      }
+
+      .vtip_container,
+      .prislovi_container {
+        width: 80%; /* Make containers narrower on mobile */
+        margin: 2rem 0; /* Adjust the margin between the containers */
+        padding: 1rem;
+      }
+    }
+  </style>
+  <body>
+    <header>
+      <a href="index.html">Home</a>
+      <a href="vtipy.html">Vtipy</a>
+      <a href="admin.html">Admin</a>
+    </header>
+
+    <div class="container">
+      <h1>Generátor vtipů</h1>
+      <div class="btn_container">
+        <button id="load">Klikni pro vtip</button>
+      </div>
+      <div class="data">
+        <div class="vtip_container">
+          <p id="vtip"></p>
+        </div>
+        <div class="prislovi_container">
+          <p id="prislovi"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+  <script>
+    const text = document.getElementById("vtip");
+    const text2 = document.getElementById("prislovi");
+    const btn = document.getElementById("load");
+
+    btn.addEventListener("click", () => {
+      generatorVtipu();
+      generatorPrislovi();
+    });
+
+    function generatorVtipu() {
+      num = Math.floor(Math.random() * vtipyArray.length);
+      text.innerHTML = vtipyArray[num];
+    }
+
+    function generatorPrislovi() {
+      num = Math.floor(Math.random() * prisloviArray.length);
+      text2.innerHTML = prisloviArray[num];
+    }
+
+    generatorVtipu();
+    generatorPrislovi();
+  </script>
+</html>
